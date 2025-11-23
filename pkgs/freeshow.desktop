@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=FreeShow
+GenericName=Presentation Software
+Comment=Free church worship service media presentation software
+Exec=freeshow
+Terminal=false
+Categories=AudioVideo;Graphics;
+Icon=freeshow

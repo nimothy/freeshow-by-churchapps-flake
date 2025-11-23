@@ -1,0 +1,31 @@
+name: Update AppImage
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 0"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v12
+
+      - name: Run updater
+        run: |
+          chmod +x scripts/update-appimage.sh
+          nix shell nixpkgs#jq nixpkgs#nix-prefetch-scripts -c ./scripts/update-appimage.sh
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Update FreeShow AppImage version and hash"
+          title: "Update FreeShow AppImage"
+          body: "Automated update of FreeShow AppImage version and sha256."
+          branch: "update-freeshow-appimage"
+          delete-branch: true
